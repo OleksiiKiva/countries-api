@@ -2,6 +2,7 @@ from typing import Dict, Any
 from urllib.parse import urljoin
 
 import requests
+from prettytable import PrettyTable, SINGLE_BORDER
 
 BASE_URL = "https://restcountries.com/v3.1/all"
 HOME_URL = urljoin(BASE_URL, "?fields=name,capital,flags")
@@ -47,3 +48,20 @@ class CountryAPI:
                 list_for_table.append([name, capital, flags])
 
             return list_for_table
+
+    def print_data(self) -> None:
+        """A method that receives a nested list and prints it in the console as a table"""
+
+        if self.__parse_data():
+            table = PrettyTable(
+                [
+                    "Country name",
+                    "Capital",
+                    "Flag_URL",
+                ]
+            )
+            table.add_rows(rows=self.__parse_data())
+            table.align = "l"
+            table.set_style(SINGLE_BORDER)
+
+            print(table.get_string(sortby="Country name", end=90))
