@@ -1,3 +1,4 @@
+import json
 from typing import Dict, Any
 from urllib.parse import urljoin
 
@@ -65,3 +66,16 @@ class CountryAPI:
             table.set_style(SINGLE_BORDER)
 
             print(table.get_string(sortby="Country name", end=90))
+
+    def save_data_to_json(self) -> None:
+        """Method that saves input data to a JSON file"""
+
+        if self.__parse_data():
+            with open("restcountries.json", "w", encoding="utf-8") as f:
+                json.dump(self.__parse_data(), f, ensure_ascii=False, indent=2)
+
+
+if __name__ == "__main__":
+    restcountries = CountryAPI()
+    restcountries.print_data()
+    # restcountries.save_data_to_json()
